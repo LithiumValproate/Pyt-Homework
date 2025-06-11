@@ -1,0 +1,47 @@
+--- 正在创建演示所需的示例文件 ---
+文件已存在: 全世界都认为汉语是婴儿语.txt
+文件已存在: stopwords.txt
+文件已存在: user_dict.txt
+文件已存在: report1.txt
+文件已存在: report2.txt
+文件已存在: report3.txt
+
+--- 开始执行任务一：文件读写与词云制作 ---
+正在读取文件: 全世界都认为汉语是婴儿语.txt
+加载了 14 个停用词。
+Building prefix dict from the default dictionary ...
+Loading model from cache /var/folders/wg/9ryslwv550l9xnt72kk5m_nr0000gn/T/jieba.cache
+Loading model cost 0.225 seconds.
+Prefix dict has been built successfully.
+正在将词频数据写入到: 词频统计结果.csv
+写入完成，文件已保存至: /Users/kasugano/Documents/Pyt Homework/BJTU/实验二/词频统计结果.csv
+正在生成词云图像: 词云图像.png
+词云生成并保存成功，文件已保存至: /Users/kasugano/Documents/Pyt Homework/BJTU/实验二/词云图像.png
+--- 任务一执行完毕 ---
+
+--- 开始执行任务二：分析轨道交通事故报告 ---
+
+--- 开始分析事故报告 ---
+已成功加载自定义词典: user_dict.txt
+
+--- 正在分析报告: report1.txt ---
+正在读取文件: report1.txt
+提取的关键词: 列控、设备、事故、LKD2、T1、南站、中心、温州、次列车、通号
+
+--- 正在分析报告: report2.txt ---
+正在读取文件: report2.txt
+提取的关键词: 应急、地铁、运营、列车、行车、12、安全、演练、032、调度
+
+--- 正在分析报告: report3.txt ---
+正在读取文件: report3.txt
+提取的关键词: 铁路、黑河、事故、建议、给予、安全、有限责任、黑河市、行政、记过处分
+
+--- 分析总结 (根据程序运行结果生成) ---
+通过比较不同报告的关键词，我们发现了事故原因的一些共性和特性：
+  - 共性问题: 在多个报告中都提到了 '安全、事故'，这些可能是需要普遍关注的问题。
+  - 特性问题: 各报告也反映了特定事故的独特原因，例如：
+    * 报告 'report1.txt' 突出了 '列控、设备、LKD2、T1' 等方面。
+    * 报告 'report2.txt' 突出了 '应急、地铁、运营、列车' 等方面。
+    * 报告 'report3.txt' 突出了 '铁路、黑河、建议、给予' 等方面。
+  - 改进建议: 使用自定义词典 (如 '追尾事故', '道岔故障') 可以帮助我们更准确地识别和统计关键信息。
+--- 任务二执行完毕 ---
