@@ -6,16 +6,16 @@ from tencentcloud.common import credential
 from tencentcloud.tmt.v20180321 import tmt_client, models
 from tqdm import tqdm
 
-load_dotenv(".env")
+load_dotenv('.env')
 
 
 def tencent_translate(text, src_lang, tgt_lang, client):
     req = models.TextTranslateRequest()
     params = {
-        "SourceText": text,
-        "Source": src_lang,
-        "Target": tgt_lang,
-        "ProjectId": 0
+        'SourceText': text,
+        'Source': src_lang,
+        'Target': tgt_lang,
+        'ProjectId': 0
     }
     req.from_json_string(json.dumps(params))
     try:
@@ -23,7 +23,7 @@ def tencent_translate(text, src_lang, tgt_lang, client):
         return resp.TargetText
     except Exception as e:
 
-        print(f"\n[Error] Failed to translate '{text}': {e}")
+        print(f'\n[Error] Failed to translate "{text}": {e}')
         return ''
 
 
@@ -35,12 +35,12 @@ def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Persona
                      dest_lang='zh',
                      region='ap-chongqing'):  # 将 region 作为参数
 
-    secret_id = os.getenv("TENCENT_SEC_ID")
-    secret_key = os.getenv("TENCENT_SEC_KEY")
+    secret_id = os.getenv('TENCENT_SEC_ID')
+    secret_key = os.getenv('TENCENT_SEC_KEY')
 
     if not secret_id or not secret_key:
-        print("错误：未在 .env 文件或环境变量中找到 TENCENT_SEC_ID 或 TENCENT_SEC_KEY。")
-        print("请参考 .env.example 文件创建 .env 文件并填入你的密钥。")
+        print('错误：未在 .env 文件或环境变量中找到 TENCENT_SEC_ID 或 TENCENT_SEC_KEY。')
+        print('请参考 .env.example 文件创建 .env 文件并填入你的密钥。')
         return
 
     try:
@@ -50,8 +50,8 @@ def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Persona
         df = pd.read_excel(input_excel)
         translations = []
 
-        print(f"Starting translation for {len(df)} words...")
-        for word in tqdm(df[src_col], desc="Translating words"):
+        print(f'Starting translation for {len(df)} words...')
+        for word in tqdm(df[src_col], desc='Translating words'):
 
             if pd.notna(word):
                 translation = tencent_translate(str(word), src_lang, dest_lang, client)
