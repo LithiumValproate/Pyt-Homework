@@ -5,8 +5,8 @@
 import pandas as pd
 from googletrans import Translator
 
-def translate_on_demand(input_excel='english_only.xlsx',
-                        output_excel='english_with_chinese.xlsx',
+def translate_on_demand(input_excel='vocabulary_list.xlsx',
+                        output_excel='vocabulary_list_with_chinese.xlsx',
                         src_col='English',
                         dest_col='Chinese',
                         src_lang='en',
