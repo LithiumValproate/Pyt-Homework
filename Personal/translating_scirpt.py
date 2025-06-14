@@ -4,18 +4,12 @@ import os
 import json
 from tencentcloud.common import credential
 from tencentcloud.tmt.v20180321 import tmt_client, models
-from tqdm import tqdm  # 导入tqdm
+from tqdm import tqdm
 
-# 在脚本开始时加载环境变量
 load_dotenv(".env")
 
 
 def tencent_translate(text, src_lang, tgt_lang, client):
-    """
-    使用腾讯云API翻译文本
-    - 移除了未使用的 cred 参数
-    - 增强了错误日志
-    """
     req = models.TextTranslateRequest()
     params = {
         "SourceText": text,
@@ -28,7 +22,7 @@ def tencent_translate(text, src_lang, tgt_lang, client):
         resp = client.TextTranslate(req)
         return resp.TargetText
     except Exception as e:
-        # 打印错误信息，方便调试
+
         print(f"\n[Error] Failed to translate '{text}': {e}")
         return ''
 
@@ -40,10 +34,7 @@ def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Persona
                      src_lang='en',
                      dest_lang='zh',
                      region='ap-chongqing'):  # 将 region 作为参数
-    """
-    主翻译脚本
-    """
-    # 从环境变量或默认值获取腾讯云API密钥
+
     secret_id = os.getenv("TENCENT_SEC_ID")
     secret_key = os.getenv("TENCENT_SEC_KEY")
 
@@ -59,10 +50,9 @@ def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Persona
         df = pd.read_excel(input_excel)
         translations = []
 
-        # 使用 tqdm 显示进度条
         print(f"Starting translation for {len(df)} words...")
         for word in tqdm(df[src_col], desc="Translating words"):
-            # 确保 word 是字符串类型，避免 pandas 读入空值为 nan
+
             if pd.notna(word):
                 translation = tencent_translate(str(word), src_lang, dest_lang, client)
                 translations.append(translation)
@@ -80,5 +70,4 @@ def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Persona
 
 
 if __name__ == '__main__':
-    # 你可以在这里修改参数来运行脚本
     translate_script()
