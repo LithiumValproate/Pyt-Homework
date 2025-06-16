@@ -27,7 +27,7 @@ def tencent_translate(text, src_lang, tgt_lang, client):
         return ''
 
 
-def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/Personal/vocabulary_list.xlsx',
+def translate_script(input_excel='/Users/kasugano/Documents/Pyt Homework/yfy/vocabulary_list.xlsx',
                      output_excel='vocabulary_list_with_chinese.xlsx',
                      src_col='English',
                      dest_col='Chinese',
