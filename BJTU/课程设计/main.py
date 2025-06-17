@@ -36,7 +36,7 @@ MAX_FARE = 15  # 用于计算超时费用
 # --- 核心计价函数 ---
 
 def calculate_base_fare(distance, config):
-    """根据里程和配置计算基础票价"""
+    # 根据里程和配置计算基础票价
     if distance <= 0:
         return 0
     if distance <= config["start_km"]:
