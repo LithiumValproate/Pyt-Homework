@@ -1,7 +1,3 @@
-# Usage:
-# 1. Install dependencies:
-#      pip install pandas openpyxl googletrans==4.0.0-rc1
-
 import pandas as pd
 from googletrans import Translator
 
