@@ -72,13 +72,13 @@ def search_song_id(song_name, artist):
             found_name = result['result']['songs'][0]['name']
             found_artist = result['result']['songs'][0]['ar'][0]['name']
             print(f'  🎶 找到歌曲: {found_name} - {found_artist} (ID: {song_id})')
-            return song_id
+            return song_id, found_name, found_artist
         else:
             print(f'  ⚠️ 未找到歌曲: {song_name} - {artist}')
-            return None
+            return None, None, None
     except Exception as e:
         print(f'  ❌ 搜索时发生错误: {e}')
-        return None
+        return None, None, None
 
 
 def main():
@@ -94,6 +94,9 @@ def main():
 
     # 2. 从 XLSX 文件读取歌曲列表
     song_ids_to_add = []
+    # 存储原始歌曲和搜索结果的对比信息
+    comparison_data = []
+    
     try:
         # 使用 pandas 读取 Excel 文件
         df = pd.read_excel(XLSX_FILE_PATH)
@@ -108,9 +111,28 @@ def main():
             song_name = str(row['TrackName']).strip()
             artist = str(row['ArtistName']).strip()
             if song_name and artist and song_name != 'nan' and artist != 'nan':
-                song_id = search_song_id(song_name, artist)
+                song_id, found_name, found_artist = search_song_id(song_name, artist)
                 if song_id:
                     song_ids_to_add.append(str(song_id))
+                    # 添加原始和搜索结果到比较数据
+                    comparison_data.append({
+                        '原歌曲名': song_name,
+                        '原歌手': artist,
+                        '搜索到的歌曲名': found_name,
+                        '搜索到的歌手': found_artist,
+                        '歌曲ID': song_id,
+                        '状态': '✅ 已找到'
+                    })
+                else:
+                    # 记录未找到的歌曲
+                    comparison_data.append({
+                        '原歌曲名': song_name,
+                        '原歌手': artist,
+                        '搜索到的歌曲名': '未找到',
+                        '搜索到的歌手': '未找到',
+                        '歌曲ID': '无',
+                        '状态': '❌ 未找到'
+                    })
 
     except FileNotFoundError:
         print(f'❌ 错误: 找不到 Excel 文件 \'{XLSX_FILE_PATH}\'。请检查文件路径是否正确。')
@@ -124,6 +146,19 @@ def main():
         return
 
     print(f'\n共找到 {len(song_ids_to_add)} 首歌曲准备导入。')
+    
+    # 显示比较表格
+    if comparison_data:
+        comparison_df = pd.DataFrame(comparison_data)
+        print("\n歌曲信息比较表格:")
+        print(comparison_df.to_string(index=False))
+        
+        # 可选: 保存比较表格到Excel
+        save_comparison = input('是否保存歌曲对比表格到Excel？[y/N]: ').strip().lower()
+        if save_comparison == 'y':
+            comparison_file = 'song_comparison.xlsx'
+            comparison_df.to_excel(comparison_file, index=False)
+            print(f'已保存对比表格到 {comparison_file}')
 
     new_playlist_name = input('请输入新歌单名称（默认 \'转移的喜欢\'）: ').strip() or '转移的喜欢'
 

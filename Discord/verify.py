@@ -4,9 +4,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv(".env")
-_TOKEN_ = os.getenv("TOKEN")
-_GUILD_ID_ = int(os.getenv("GUILD_ID"))
-_CHANNEL_ = int(os.getenv("CHAN_ID"))
+TOKEN = os.getenv("TOKEN")
+GUILD = int(os.getenv("GUILD_ID"))
+CHANNEL = int(os.getenv("CHAN_ID"))
 ROLE_0 = "news"  # 自动分配的角色
 ROLE_1 = "tukas"  # 回答正确后分配的角色
 
@@ -47,11 +47,11 @@ async def on_ready():
 
 @client.event
 async def on_member_join(member):
-    if member.guild.id != _GUILD_ID_:
+    if member.guild.id != GUILD:
         return
 
     guild = member.guild
-    chan = guild.get_channel(_CHANNEL_)
+    chan = guild.get_channel(CHANNEL)
 
     # 1) 自动分配 news 角色
     news_role = discord.utils.get(guild.roles, name=ROLE_0)
@@ -75,7 +75,7 @@ async def on_member_join(member):
             f"{chan.mention} チャンネルで `2+2 = ?` の質問に答えると、ロール **{ROLE_1}** が取得できます。",
             view=QuizView()
         )
-    except discord.Forbidden:
+    except discor.Forbidden:
         pass
 
 @client.event
@@ -99,4 +99,4 @@ async def on_message(message):
         await message.channel.send(response)
 
 
-client.run(_TOKEN_)
+client.run(TOKEN)
