@@ -8,3 +8,9 @@ def triangle(a, b, c) -> str:
     s = a * a + b * b - c * c
     angle = 'Right' if s == 0 else 'Acute' if s > 0 else 'Obtuse'
     return f'{t}, {angle}'
+
+
+print(triangle(5, 4, 3))  # Scalene, Right
+print(triangle(2, 2, 3))  # Isosceles, Acute
+print(triangle(1, 1, 1))  # Equilateral, Acute
+print(triangle(2, 1, 3))  # Not a triangle

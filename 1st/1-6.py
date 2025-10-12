@@ -20,3 +20,9 @@ class Student(Person):
 
     def info(self):
         return f'Name: {self.name}, Age: {self.age}, Grade: {self.grade}'
+
+
+p1 = Person('Alice', 30, 1.65)
+print(p1.info())
+p2 = Student('Bob', 20, 1.75, 'A')
+print(p2.info())
